@@ -2,12 +2,14 @@
 ifeq ($(COMPILER),gcc) 
 	CC=$(PREFIX)gcc
 	CXX=$(PREFIX)g++
-	LINK=$(CXX)
+	LINKCXX=$(CXX)
+	LINKC=$(CC)
 else
 ifeq ($(COMPILER),clang) 
 	CC=clang
 	CXX=clang++
-	LINK=$(CXX)
+	LINKCXX=$(CXX)
+	LINKC=$(CC)
 endif
 endif
 
@@ -21,6 +23,12 @@ CXXFLAGS += --std=gnu++2b
 CFLAGS += -Werror
 CFLAGS += -Wall
 CFLAGS += --std=gnu2x
+
+ifeq ($(CXX_SRC),)
+	LINK := $(LINKC)
+else
+	LINK := $(LINKCXX)
+endif
 
 
 ################################################################################
