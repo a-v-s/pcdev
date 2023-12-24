@@ -64,7 +64,18 @@ endif
 
 ifeq ($(TARGET_OS),mingw)
 	EXESUF=.exe
+	SOSUF=.dll
+	ASUF=.a
 endif
+
+ifeq ($(TARGET_OS),linux)
+	EXESUF=
+	SOSUF=.so
+	SOPRE=lib
+	ASUF=.a
+	APRE=lib
+endif
+
 
 ifeq ($(COMPILER),gcc) 
   ifneq ($(HOST_OS),$(TARGET_OS))

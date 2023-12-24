@@ -24,6 +24,8 @@ endif
 BUILD_DIR = bld/$(COMPILER)/$(TARGET_OS)/$(TARGET_MACHINE)/$(BUILD_TYPE)
 OUT_DIR = out/$(COMPILER)/$(TARGET_OS)/$(TARGET_MACHINE)/$(BUILD_TYPE)
 OUT_EXE = $(OUT_DIR)/$(EXEPRE)$(TARGET)$(EXESUF) 
+OUT_SO = $(OUT_DIR)/$(SOPRE)$(TARGET)$(SOSUF) 
+OUT_A = $(OUT_DIR)/$(APRE)$(TARGET)$(ASUF) 
 
 CXX_OBJ = $(CXX_SRC:%=$(BUILD_DIR)/%.o)
 C_OBJ = $(C_SRC:%=$(BUILD_DIR)/%.o)
@@ -35,7 +37,26 @@ CXXFLAGS +=  -MMD -MP -MF"$(@:%.o=%.d)"
 ASFLAGS   += -MMD -MP -MF"$(@:%.o=%.d)"
 
 
+ifeq ($(BUILD_LIBRARY),D)
+default: $(OUT_SO)
+CFLAGS += -fPIC
+CXXFLAGS += -fPIC
+LDFLAGS += -shared
+else 
+ifeq ($(BUILD_LIBRARY),S)
+default: $(OUT_A)
+else 
 default: $(OUT_EXE)
+endif
+endif
+
+$(OUT_SO): $(CXX_OBJ) $(C_OBJ) 
+	$(MKDIR_P) $(OUT_DIR)
+	$(LINK) $(CXX_OBJ) $(C_OBJ) $(LDFLAGS) -o$@
+
+$(OUT_A): $(CXX_OBJ) $(C_OBJ)
+	$(MKDIR_P) $(OUT_DIR)
+	$(AR) rcs $@ $(CXX_OBJ) $(C_OBJ)
 
 $(OUT_EXE): $(CXX_OBJ) $(C_OBJ)
 	$(MKDIR_P) $(OUT_DIR)
