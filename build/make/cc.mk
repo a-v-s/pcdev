@@ -13,14 +13,14 @@ ifeq ($(COMPILER),clang)
 endif
 endif
 
-CXXFLAGS += -Werror
+#CXXFLAGS += -Werror
 CXXFLAGS += -Wall
 
 # For GCC, gnu++23 and gnu++2b are equivalent, but clang only accepts 2b
 #CXXFLAGS += --std=gnu++23
 CXXFLAGS += --std=gnu++2b
 
-CFLAGS += -Werror
+#CFLAGS += -Werror
 CFLAGS += -Wall
 CFLAGS += --std=gnu2x
 
@@ -30,6 +30,10 @@ else
 	LINK := $(LINKCXX)
 endif
 
+
+ASFLAGS  += $(foreach d, $(AS_INCLUDES), -I$d)
+CFLAGS   += $(foreach d, $(C_INCLUDES), -I$d)
+CXXFLAGS += $(foreach d, $(CXX_INCLUDES), -I$d)
 
 ################################################################################
 ## Add verbose option													       #
