@@ -1,4 +1,3 @@
--DEPENDENCIES = $(shell find $(BUILD_DIR) -iname "*.d")
 
 BUILD_TYPE?=debug
 
@@ -39,6 +38,11 @@ CFLAGS   +=  -MMD -MP -MF"$(@:%.o=%.d)"
 CXXFLAGS +=  -MMD -MP -MF"$(@:%.o=%.d)"
 ASFLAGS   += -MMD -MP -MF"$(@:%.o=%.d)"
 
+
+
+CFLAGS   += -D__FILENAME__=\"$(notdir $<)\" 
+CXXFLAGS += -D__FILENAME__=\"$(notdir $<)\" 
+ASFLAGS  += -D__FILENAME__=\"$(notdir $<)\" 
 
 ifeq ($(BUILD_LIBRARY),D)
 default: $(OUT_SO)
@@ -87,5 +91,4 @@ clean:
 ################################################################################
 # Dependencies
 ################################################################################
-#-include $(wildcard $(BUILD_DIR)/*.d)
--include $(DEPENDENCIES)
+include $(shell find $(BUILD_DIR) -iname "*.d")

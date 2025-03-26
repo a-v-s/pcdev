@@ -24,11 +24,13 @@ CXXFLAGS += -Wall
 
 # For GCC, gnu++23 and gnu++2b are equivalent, but clang only accepts 2b
 #CXXFLAGS += --std=gnu++23
-CXXFLAGS += --std=gnu++2b
+#CXXFLAGS += --std=gnu++2b
+CXXFLAGS += --std=gnu++26
 
 #CFLAGS += -Werror
 CFLAGS += -Wall
-CFLAGS += --std=gnu2x
+#CFLAGS += --std=gnu2x
+CFLAGS += --std=gnu23
 
 ifeq ($(CXX_SRC),)
 	LINK := $(CC)
@@ -37,8 +39,8 @@ else
 endif
 
 
-ASFLAGS  += $(foreach d, $(AS_INCLUDES), -I$d)
-CFLAGS   += $(foreach d, $(C_INCLUDES), -I$d)
+ASFLAGS  += $(foreach d, $(AS_INCLUDES),  -I$d)
+CFLAGS   += $(foreach d, $(C_INCLUDES),   -I$d)
 CXXFLAGS += $(foreach d, $(CXX_INCLUDES), -I$d)
 
 ################################################################################
