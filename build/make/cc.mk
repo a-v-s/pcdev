@@ -23,9 +23,9 @@ endif
 CXXFLAGS += -Wall
 
 # For GCC, gnu++23 and gnu++2b are equivalent, but clang only accepts 2b
-#CXXFLAGS += --std=gnu++23
+CXXFLAGS += --std=gnu++23
 #CXXFLAGS += --std=gnu++2b
-CXXFLAGS += --std=gnu++26
+#CXXFLAGS += --std=gnu++26 # starting gcc 14
 
 #CFLAGS += -Werror
 CFLAGS += -Wall
