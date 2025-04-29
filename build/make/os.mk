@@ -76,6 +76,14 @@ ifeq ($(TARGET_OS),linux)
 	APRE=lib
 endif
 
+ifeq ($(TARGET_OS),haiku)
+	EXESUF=
+	SOSUF=.so
+	SOPRE=lib
+	ASUF=.a
+	APRE=lib
+endif
+
 
 ifeq ($(COMPILER),gcc) 
   ifneq ($(HOST_OS),$(TARGET_OS))
