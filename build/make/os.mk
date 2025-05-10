@@ -40,8 +40,7 @@ endif
 
 TARGET_OS?=$(HOST_OS)
 TARGET_MACHINE?=$(HOST_MACHINE)
-$(info HOST:   $(HOST_OS))
-$(info TARGET: $(TARGET_OS))
+
 
 ifneq ($(TARGET_OS),mingw)
   ifneq ($(HOST_MACHINE),$(TARGET_MACHINE))
@@ -104,4 +103,9 @@ ifeq ($(COMPILER),clang)
     endif
   endif
 endif
+
+$(info HOST_OS:        $(HOST_OS))
+$(info TARGET_OS:      $(TARGET_OS))
+$(info HOST_MACHINE:   $(HOST_MACHINE))
+$(info TARGET_MACHINE: $(TARGET_MACHINE))
 
