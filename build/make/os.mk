@@ -61,27 +61,31 @@ endif
 endif
 
 
+# When building for mingw (Windows) use these pre/suffixes
+# Otherwise, assume a POSIX/elf style OS.
+# As Windows is the exception, and we shouldn't list all
+# Operating Systems here. Might add excptions in the future,
+# not list the standard multiple times.
+# Potentially for Darwin (macOS) support? If the PureDarwin
+# project comes back to life?
+
 ifeq ($(TARGET_OS),mingw)
-	EXESUF=.exe
-	SOSUF=.dll
-	ASUF=.a
+	EXEPRE  :=
+	EXESUF  :=.exe
+	SOPRE   :=
+	SOSUF   :=.dll
+	APRE    :=
+	ASUF    :=.a
+else
+	EXEPRE  :=
+	EXESUF  :=
+	SOPRE   :=lib
+	SOSUF   :=.so
+	APRE    :=lib
+	ASUF    :=.a
 endif
 
-ifeq ($(TARGET_OS),linux)
-	EXESUF=
-	SOSUF=.so
-	SOPRE=lib
-	ASUF=.a
-	APRE=lib
-endif
 
-ifeq ($(TARGET_OS),haiku)
-	EXESUF=
-	SOSUF=.so
-	SOPRE=lib
-	ASUF=.a
-	APRE=lib
-endif
 
 
 ifeq ($(COMPILER),gcc) 
