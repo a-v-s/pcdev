@@ -2,41 +2,34 @@ HOST_OS=$(shell uname | tr A-Z a-z)
 HOST_MACHINE=$(shell uname -m)
 
 ifeq ($(MSYSTEM),MINGW32)
-    TARGET_OS=mingw
 	TARGET_MACHINE=i686
+	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
 endif
 
 ifeq ($(MSYSTEM),MINGW64)
-    TARGET_OS=mingw
 	TARGET_MACHINE=x86_64
+	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
 endif
 
-ifeq ($(MSYSTEM),CLANG32)
-    TARGET_OS=mingw
+ifeq ($(MSYSTEM),CLANG32)    
 	TARGET_MACHINE=i686
+	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=clang
 endif
 
 ifeq ($(MSYSTEM),CLANG64)
-    TARGET_OS=mingw
 	TARGET_MACHINE=x86_64
+	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=clang
 endif
 
-
-# Under MSYS, uname returns a string like MINGW64_NT-10.0-19043
-# We are not interested in the version, so we replace the string here
-ifneq (,$(findstring mingw64,$(HOST_OS)))
-		HOST_OS=mingw
+ifeq ($(MSYSTEM),UCRT64)
+	TARGET_MACHINE=x86_64
+	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	COMPILER?=gcc
 endif
-
-ifneq (,$(findstring mingw32,$(HOST_OS)))
-        HOST_OS=mingw
-endif
-
-
 
 TARGET_OS?=$(HOST_OS)
 TARGET_MACHINE?=$(HOST_MACHINE)
@@ -77,6 +70,14 @@ ifeq ($(TARGET_OS),mingw)
 	APRE    :=
 	ASUF    :=.a
 else
+ifdef MSYSTEM
+EXEPRE  :=
+	EXESUF  :=.exe
+	SOPRE   :=
+	SOSUF   :=.dll
+	APRE    :=
+	ASUF    :=.a
+else
 	EXEPRE  :=
 	EXESUF  :=
 	SOPRE   :=lib
@@ -84,7 +85,7 @@ else
 	APRE    :=lib
 	ASUF    :=.a
 endif
-
+endif
 
 
 
