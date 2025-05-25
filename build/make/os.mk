@@ -1,39 +1,48 @@
 HOST_OS=$(shell uname | tr A-Z a-z)
 HOST_MACHINE=$(shell uname -m)
 
+HOST_TUPLE=$(shell $(CC) -dumpmachine)
+
 ifeq ($(MSYSTEM),MINGW32)
 	TARGET_MACHINE=i686
-	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=$(TARGET_MACHINE)-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
+	CFLAGS += -D$(MSYSTEM)
+	CXXFLAGS += -D$(MSYSTEM)
+	ASMFLAGS += -D$(MSYSTEM)
 endif
 
 ifeq ($(MSYSTEM),MINGW64)
 	TARGET_MACHINE=x86_64
-	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=$(TARGET_MACHINE)-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
-endif
-
-ifeq ($(MSYSTEM),CLANG32)    
-	TARGET_MACHINE=i686
-	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
-	COMPILER?=clang
+	CFLAGS += -D$(MSYSTEM)
+	CXXFLAGS += -D$(MSYSTEM)
+	ASMFLAGS += -D$(MSYSTEM)
 endif
 
 ifeq ($(MSYSTEM),CLANG64)
 	TARGET_MACHINE=x86_64
-	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=$(TARGET_MACHINE)-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=clang
+	CFLAGS += -D$(MSYSTEM)
+	CXXFLAGS += -D$(MSYSTEM)
+	ASMFLAGS += -D$(MSYSTEM)
 endif
 
 ifeq ($(MSYSTEM),UCRT64)
 	TARGET_MACHINE=x86_64
-	TARGET_OS=$(TARGET_MACHINE)-msys64-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=$(TARGET_MACHINE)-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
+	CFLAGS += -D$(MSYSTEM)
+	CXXFLAGS += -D$(MSYSTEM)
+	ASMFLAGS += -D$(MSYSTEM)
 endif
 
 TARGET_OS?=$(HOST_OS)
 TARGET_MACHINE?=$(HOST_MACHINE)
 
+TARGET_TUPLE?=$(HOST_TUPLE)
 
 ifneq ($(TARGET_OS),mingw)
   ifneq ($(HOST_MACHINE),$(TARGET_MACHINE))
@@ -118,7 +127,8 @@ ifeq ($(COMPILER),clang)
 endif
 
 $(info HOST_OS:        $(HOST_OS))
-$(info TARGET_OS:      $(TARGET_OS))
 $(info HOST_MACHINE:   $(HOST_MACHINE))
+$(info HOST_TUPLE:     $(HOST_TUPLE))
+$(info TARGET_OS:      $(TARGET_OS))
 $(info TARGET_MACHINE: $(TARGET_MACHINE))
-
+$(info TARGET_TUPLE:   $(TARGET_TUPLE))
