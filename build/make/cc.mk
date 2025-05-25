@@ -47,10 +47,10 @@ CXXFLAGS += $(foreach d, $(CXX_INCLUDES), -I$d)
 ## Add verbose option													       #
 ################################################################################
 V ?= 0
-ACTUAL_CC := $(CC)
-ACTUAL_CXX := $(CXX)
-ACTUAL_AS := $(AS)
-ACTUAL_AR := $(AR)
+ACTUAL_CC   := $(CC)
+ACTUAL_CXX  := $(CXX)
+ACTUAL_AS   := $(AS)
+ACTUAL_AR   := $(AR)
 ACTUAL_LINK := $(LINK)
 
 
