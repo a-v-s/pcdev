@@ -1,16 +1,23 @@
 ifeq ($(COMPILER),gcc) 
-	CC=$(PREFIX)gcc
-	CXX=$(PREFIX)g++
-	AR=$(PREFIX)ar
-	AS=$(PREFIX)as
+	CC:=$(PREFIX)gcc
+	CXX:=$(PREFIX)g++
+	AR:=$(PREFIX)ar
+	AS:=$(PREFIX)as
 else
 ifeq ($(COMPILER),clang) 
-	CC=clang
-	CXX=clang++
-	AR=llvm-ar
-	AS=llvm-as
+	CC:=clang
+	CXX:=clang++
+	AR:=llvm-ar
+	AS:=llvm-as
 endif
 endif
+
+ifneq ($(COMPILER_VERSION),) 
+	CC:=$(CC)-$(COMPILER_VERSION)
+	CXX:=$(CXX)-$(COMPILER_VERSION)
+endif
+
+
 
 # Get the compiler version
 CC_VERSION       := $(shell $(CC) -dumpversion)
