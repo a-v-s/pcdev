@@ -1,7 +1,5 @@
 TARGET=hello_c
-
-C_SRC 	 += hello.c
-
+OUT_DIR = OUT
 PCDEV_ROOT=../..
-
+C_SRC 	 += hello.c
 include $(PCDEV_ROOT)/build/make/all.mk

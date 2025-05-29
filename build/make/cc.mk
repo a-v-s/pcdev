@@ -46,6 +46,7 @@ ifeq ($(COMPILER),gcc)
 	else
 	ifeq ($(shell test $(CC_VERSION_MAJOR) -ge 11; echo $$?),0)
 		CXXFLAGS += --std=gnu++23
+	else
 	ifeq ($(shell test $(CC_VERSION_MAJOR) -ge 10; echo $$?),0)
 		CXXFLAGS += --std=gnu++20
 	else
