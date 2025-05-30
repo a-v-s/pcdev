@@ -40,7 +40,7 @@ endif
 
 
 ifeq ($(MSYSTEM),MINGW32)
-	TARGET_TUPLE=i686-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=i686-msys2-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	TARGET_OS=mingw
 	COMPILER?=gcc
 	CFLAGS += -D$(MSYSTEM)
@@ -49,7 +49,7 @@ ifeq ($(MSYSTEM),MINGW32)
 endif
 
 ifeq ($(MSYSTEM),MINGW64)
-	TARGET_TUPLE=x86_64-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=x86_64-msys2-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
 	TARGET_OS=mingw
 	CFLAGS += -D$(MSYSTEM)
@@ -58,7 +58,7 @@ ifeq ($(MSYSTEM),MINGW64)
 endif
 
 ifeq ($(MSYSTEM),CLANG64)
-	TARGET_TUPLE=x86_64-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=x86_64-msys2-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=clang
 	TARGET_OS=mingw
 	CFLAGS += -D$(MSYSTEM)
@@ -67,9 +67,9 @@ ifeq ($(MSYSTEM),CLANG64)
 endif
 
 ifeq ($(MSYSTEM),UCRT64)
-	TARGET_TUPLE=x86_64-msys64-windows-$(shell echo $(MSYSTEM) | tr A-Z a-z)
+	TARGET_TUPLE=x86_64-msys2-$(shell echo $(MSYSTEM) | tr A-Z a-z)
 	COMPILER?=gcc
-	TARGET_OS=mingw32
+	TARGET_OS=mingw
 	CFLAGS += -D$(MSYSTEM)
 	CXXFLAGS += -D$(MSYSTEM)
 	ASMFLAGS += -D$(MSYSTEM)
