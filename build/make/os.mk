@@ -10,7 +10,8 @@ ifeq ($(COMPILER),clang)
 	HOST_TUPLE=$(shell clang -dumpmachine)
 endif
 
-
+# TODO Switching to TARGET_TUPLE rather then TARGET_OS requires some
+# tuple parsing to make some stuff like file prefix/suffix code work
 
 ifneq ($(TARGET_TUPLE),)
 
@@ -88,6 +89,8 @@ TARGET_TUPLE?=$(HOST_TUPLE)
 # not list the standard multiple times.
 # Potentially for Darwin (macOS) support? If the PureDarwin
 # project comes back to life?
+# It seems the darling project is taking off. Prelimary Darwin support 
+# throug Darling at the moment
 
 ifeq ($(TARGET_OS),mingw)
 	EXEPRE  :=
@@ -97,12 +100,12 @@ ifeq ($(TARGET_OS),mingw)
 	APRE    :=
 	ASUF    :=.a
 else
-ifdef MSYSTEM
-EXEPRE  :=
-	EXESUF  :=.exe
-	SOPRE   :=
-	SOSUF   :=.dll
-	APRE    :=
+ifeq ($(TARGET_OS),darwin)
+	EXEPRE  :=
+	EXESUF  :=
+	SOPRE   :=lib
+	SOSUF   :=.dylib
+	APRE    :=lib
 	ASUF    :=.a
 else
 	EXEPRE  :=
